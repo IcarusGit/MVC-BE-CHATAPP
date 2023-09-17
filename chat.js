@@ -243,7 +243,7 @@ app.post('/chat', jwtCheck, (req, res) => {
         });
     } 
     else {
-        const newConvo ={
+        const newConvo = {
             conversing: [req.body.talkingto, req.user.username],
             messages: []
         }

@@ -43,7 +43,6 @@ giveAllRoutes(app)
 DB.mongoose.connect(DB.url).then(async (res) => {
     console.log(` Runtime: Connected to ${ res.connections[0]['_connectionString'].includes('localhost') ? "localhost" : "ATLAS" } MongoDB`)
 
-   
     // async function findRegisteredUsers() {
     //     const users = await DB.registeredUsers.find();
     //     const username = users.map(user => user.username)

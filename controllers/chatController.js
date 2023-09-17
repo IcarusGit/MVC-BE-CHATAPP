@@ -26,13 +26,13 @@ exports.newOrExistingConvo = async (req,res) => {
             currentlyLoggedIn: req.user.username //username in jwt nakasave dun yung curerntly logged in
         });
     } 
-    else {
-        const newConvo ={
+    else {        
+        const conversation = new DB.conversations({        
             conversing: [req.body.talkingto, req.user.username],
-            messages: []
-        }
-    
-        conversations.push(newConvo);
+            messages:  []            
+        })
+
+        conversation.save()
     
         res.send({
             message: "A new conversation has been created",
