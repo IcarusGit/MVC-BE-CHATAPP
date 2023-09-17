@@ -36,32 +36,14 @@ app.use(express.json())
 const mongoose = require('mongoose')
 const DB = require('./models')//I FETCH ALL THE DATAS THAT ARE FOR THE DATABASE SO THAT I CAN CONNECT TO THE DB HERE IN THE SERVER FILE OR MAIN FILE
 
-DB.mongoose.connect(DB.url).then((res) => {
+
+const giveAllRoutes = require('./routes')
+giveAllRoutes(app)
+
+DB.mongoose.connect(DB.url).then(async (res) => {
     console.log(` Runtime: Connected to ${ res.connections[0]['_connectionString'].includes('localhost') ? "localhost" : "ATLAS" } MongoDB`)
 
-    // const conversation = new DB.conversations({
-    
-    //     conversing: ['me', 'you'],
-    //     messages:  [{
-    //         content: "hello hello",
-    //         sender: "from yours truly"
-    //     },
-    //     {
-    //         content: "bfgsfgsf",
-    //         sender: "sfbgssersvgresg"
-    //     }]
-        
-    // })
-
-    //conversation.save()    
-
-    // const newusers = new DB.registeredUsers({
-    //     username: "asd",
-    //     password: "asd"
-    // })
-
-    // newusers.save()
-    
+   
     // async function findRegisteredUsers() {
     //     const users = await DB.registeredUsers.find();
     //     const username = users.map(user => user.username)
@@ -74,8 +56,7 @@ DB.mongoose.connect(DB.url).then((res) => {
 
 
 
-const giveAllRoutes = require('./routes')
-giveAllRoutes(app)
+
 
 
 app.listen(3002, () => {

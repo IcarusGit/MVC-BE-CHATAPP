@@ -1,16 +1,11 @@
 const DB = require('../models')
 
-
-exports.showUsers = function (req, res) {
-    const mapregisteredUsers = DB.registeredUsers.find().map(user => {
+//get
+exports.showUsers = async (req, res) => {
+    const registeredUsers = await DB.registeredUsers.find()
+    const mapregisteredUsers = registeredUsers.map(user => {
         return {username: user.username}
     })
-    // get the username only, to hide showing the password in the front end
-    // const mapregisteredUsers = registeredUsers.map(user => {
-    //     return {
-    //         username: user.username
-    //     };
-    // });
     res.send({
         users: mapregisteredUsers,
         currentlyLoggedIn: req.user.username,
@@ -18,12 +13,13 @@ exports.showUsers = function (req, res) {
     })
 }
 
-exports.newOrExistingConvo = (req,res) => {
+//post
+exports.newOrExistingConvo = async (req,res) => {
+    
+    const conversations = await DB.conversations.find()
     // Check if an existing conversation already exists and returns its index
-    const existingConversation = conversations.find(convo =>
-        convo.conversing.includes(req.body.talkingto) && convo.conversing.includes(req.user.username)
-    );
-
+    const existingConversation = conversations.find(convo => convo.conversing.includes(req.body.talkingto) && convo.conversing.includes(req.user.username))
+    
     if (existingConversation) {
         res.send({
             message: "Existing conversation found",

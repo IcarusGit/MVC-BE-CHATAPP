@@ -21,6 +21,8 @@ exports.jwtCheck = function (req, res, next) {
     });
 }
 
+
+
 // // JWT Authentication
 // exports.jwt = function jwtCheck(req, res, next){
 //     const token = req.headers.authorization.split(' ')[1]
