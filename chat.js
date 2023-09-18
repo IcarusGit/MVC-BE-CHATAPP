@@ -30,6 +30,12 @@ const blackListedTokens = []
 const conversations = []
 const altOnlineUser = {}
 
+// io.on("connection", myController.init)
+
+// exports.init = function(socket){
+//     socket.on
+// }
+
 io.on("connection", (socket) => {
     function createChatRoom(user1, user2) {
         const roomName = [user1, user2].sort().join('_');

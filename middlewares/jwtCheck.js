@@ -1,12 +1,18 @@
 const jwt = require('jsonwebtoken')
+const DB = require('../models')
+const altOnlineUser = require('../helpers/onlineusers')
+
+
 // JWT Authentication
-exports.jwtCheck = function (req, res, next) {
+exports.jwtCheck = async function (req, res, next) {
     const token = req.headers.authorization.split(' ')[1]
+    const blackListedToken = await DB.blackListedTokens.findOne({token: token})
     
     jwt.verify(token, 'SECRET_PASSWORD', (err, decoded) => {
         req.user = decoded;
         req.token = token
-        if( err || blackListedTokens.includes(token) ){
+        if( err || (blackListedToken != null) ){
+            console.log(err)
             const socketID = Object.keys(altOnlineUser).find(key => altOnlineUser[key] === req.user.username);
             if (Object.values(altOnlineUser).includes(req.user.username)){    
                 delete altOnlineUser[socketID]
