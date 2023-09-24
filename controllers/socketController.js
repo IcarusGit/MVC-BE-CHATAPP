@@ -1,7 +1,7 @@
 const DB = require('../models')
 const altOnlineUser = require('../helpers/onlineusers')
 
-const { cors, express, app, createServer, Server, httpServer, io } = require('../initiateIO');
+const { io } = require('../initiateIO');
 
 
 exports.socketConnection = (socket) => {
@@ -37,13 +37,13 @@ exports.socketConnection = (socket) => {
 
         const roomname = createChatRoom(data.sender, data.receiver);
 
-        if (conversation != null) {
+        if (conversation) {
             const convo = {
                 content: data.content,
                 sender: data.sender
             }
 
-            await DB.conversations.findOneAndUpdate({ _id: conversation._id },{ $push: { messages: convo } },{ new: true })
+            // await DB.conversations.findOneAndUpdate({ _id: conversation._id },{ $push: { messages: convo } },{ new: true })
 
             // DB.conversation
         
@@ -90,7 +90,7 @@ exports.socketConnection = (socket) => {
         })
     })
 
-    socket.on('disconnect', (data) => {
+    socket.on('disconnect', () => {
         console.log(socket.id)
         delete altOnlineUser[socket.id]
 

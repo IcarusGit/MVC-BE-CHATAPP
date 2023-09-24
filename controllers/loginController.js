@@ -1,5 +1,9 @@
 const DB = require('../models')
 const jwt = require('jsonwebtoken')
+// const cookieParser = require('cookie-parser')
+// const {app} = require('../initiateIO')
+// app.use(cookieParser())
+
 
 exports.index = async (req, res) => {
     const currentuser = await DB.registeredUsers.findOne({username: req.body.username, password: req.body.password})
@@ -13,7 +17,8 @@ exports.index = async (req, res) => {
 
         // Encode your JWT
         let token = jwt.sign(user, 'SECRET_PASSWORD');
-
+        
+        // res.cookie('cookie', 'baste')
         // send to logged in users
         res.send({
             message: "Logged in",

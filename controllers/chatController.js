@@ -39,16 +39,22 @@ exports.newOrExistingConvo = async (req,res) => {
 //get    /chat/:username
 exports.fetchConvo = async (req, res) => {
     const conversation = await DB.conversations.findOne({ conversing: {$all: [req.params.username, req.user.username]} })
-    console.log(conversation)
+    //console.log(conversation)
     res.send({
         convo: conversation
     })
 }
 //post   /chat/:username
 exports.addToAnExistingConvo = async (req, res) => {
-    const conversation = await DB.conversations.findOne({ conversing: {$all: [req.params.username, req.user.username]} })
+    // const conversation = await DB.conversations.findOne({ conversing: {$all: [req.params.username, req.user.username]} })
+    const convo = {
+        content: req.body.content,
+        sender: req.user.username
+    }
 
-    if (conversation != null){
+    //NEW: TRUE is user to return the updated document
+    const conversation = await DB.conversations.findOneAndUpdate({ conversing: { $all: [req.params.username, req.user.username] } }, { $push: { messages: convo } },{ new: true});
+    if (conversation){
         res.send({
             result: "Message sent successfully",
             content: req.body.content,

@@ -9,12 +9,11 @@ exports.jwtCheck = async function (req, res, next) {
     const blackListedToken = await DB.blackListedTokens.findOne({token: token})
     
     jwt.verify(token, 'SECRET_PASSWORD', (err, decoded) => {
-        req.user = decoded;
-        req.token = token
+        
         if( err || (blackListedToken != null) ){
-            console.log(err)
-            const socketID = Object.keys(altOnlineUser).find(key => altOnlineUser[key] === req.user.username);
-            if (Object.values(altOnlineUser).includes(req.user.username)){    
+            console.log(err)            
+            if (Object.values(altOnlineUser).includes(decoded.username)){    
+                const socketID = Object.keys(altOnlineUser).find(key => altOnlineUser[key] === decoded.username);
                 delete altOnlineUser[socketID]
             }
 
@@ -22,31 +21,16 @@ exports.jwtCheck = async function (req, res, next) {
                 message: "Invalid token"
             })
         }
+        req.user = decoded;
+        req.token = token
         
         next();
     });
 }
 
 
+// GENERATE COOKIE FUNCTION
 
-// // JWT Authentication
-// exports.jwt = function jwtCheck(req, res, next){
-//     const token = req.headers.authorization.split(' ')[1]
-    
-//     jwt.verify(token, 'SECRET_PASSWORD', (err, decoded) => {
-//         req.user = decoded;
-//         req.token = token
-//         if( err || blackListedTokens.includes(token) ){
-//             const socketID = Object.keys(altOnlineUser).find(key => altOnlineUser[key] === req.user.username);
-//             if (Object.values(altOnlineUser).includes(req.user.username)){    
-//                 delete altOnlineUser[socketID]
-//             }
-
-//             return res.status(401).send({
-//                 message: "Invalid token"
-//             })
-//         }
-        
-//         next();
-//     });
-// }
+function encryptAnInfo(info) {
+    return jwt.sign(info, "ACCESS_TOKEN_PASSWORD", {expiresIn: '10m'})
+}

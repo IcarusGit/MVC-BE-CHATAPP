@@ -1,7 +1,5 @@
-const { cors, express, app, createServer, Server, httpServer, io } = require('./initiateIO');
+const { cors, express, app, httpServer, io } = require('./initiateIO');
 
-app.use(cors())
-app.use(express.json())
 
 //=========================================
 const mongoose = require('mongoose')
