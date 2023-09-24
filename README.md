@@ -20,3 +20,5 @@ ACCESS TOKEN ---- eto yung nilalagay talaga dapat sa local storage, meron siyang
                   if expired na and wala na ring refresh token sa cookies bale mag aauto logout nalang siya pero pag naglogout naman tanggal na rin naman refresh token
                   so alam mo na next non isip ka nalang diskarte
 
+
+![image](https://github.com/IcarusGit/MVC-BE-CHATAPP/assets/142165616/b81aa23d-751f-4b1b-ac51-a69ced876a4a)
