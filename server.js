@@ -13,7 +13,10 @@ giveAllRoutes(app)
 //=========================================
 
 
-DB.mongoose.connect(DB.url).then(async (res) => {
+DB.mongoose.connect(DB.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(async (res) => {
     console.log(` Runtime: Connected to ${ res.connections[0]['_connectionString'].includes('localhost') ? "localhost" : "ATLAS" } MongoDB`)
 
 }).catch((err) => {
@@ -21,5 +24,5 @@ DB.mongoose.connect(DB.url).then(async (res) => {
 })
 
 httpServer.listen(3002, () => {
-    console.log(`Application runnning at port 3002`)
+    console.log(`Sebastian's Realtime Chat Application runnning at port 3002`)
 })

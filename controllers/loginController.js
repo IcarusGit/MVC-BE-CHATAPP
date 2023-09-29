@@ -18,13 +18,15 @@ exports.index = async (req, res) => {
         // Encode your JWT
         let token = jwt.sign(user, 'SECRET_PASSWORD');
         
-        // res.cookie('cookie', 'baste')
+        // iset ang cookie into httpOnly: true para di siya maaccess sa front end bale para siyang invisible di makikita sa inspect ng front end pero unique parin siya sa browser lang
+        // res.cookie('cookie', currentuser.username, )
         // send to logged in users
         res.send({
             message: "Logged in",
             status: true,
             username: req.body.username,
-            token: "Bearer " + token // Send token and other data
+            token: "Bearer " + token, // Send token and other data
+            cookie: req.cookies.cookie 
         });
     }
 
